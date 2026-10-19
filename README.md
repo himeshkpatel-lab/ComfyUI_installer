@@ -204,6 +204,40 @@ Put your SD checkpoints (the huge ckpt/safetensors files) in: models/checkpoints
 
 Put your VAE in: models/vae
 
+### Windows (PowerShell) with an NVIDIA GPU
+
+Install [Git](https://git-scm.com/download/win) and [Python 3.13](https://www.python.org/downloads/), or with winget:
+
+```powershell
+winget install --id Git.Git -e
+winget install --id Python.Python.3.13 -e
+```
+
+Open a new PowerShell window so `git` and `python` are on the PATH, then run:
+
+```powershell
+cd $HOME\Documents
+git clone https://github.com/himeshkpatel-lab/comfyui_installer.git
+cd comfyui_installer
+py -3.13 -m venv venv
+.\venv\Scripts\python.exe -m pip install --upgrade pip
+.\venv\Scripts\python.exe -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Check that PyTorch can see the GPU. This should print `True`:
+
+```powershell
+.\venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available())"
+```
+
+If it prints `False`, update your NVIDIA driver to one that supports CUDA 13.0. Then start ComfyUI and open http://127.0.0.1:8188:
+
+```powershell
+.\venv\Scripts\python.exe main.py
+```
+
+Run these commands from inside `comfyui_installer`. Checkpoints go in `models\checkpoints`.
 
 ### AMD GPUs (Linux)
 
